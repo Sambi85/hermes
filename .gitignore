@@ -45,8 +45,13 @@ config/secrets.yml
 
 /public/packs
 /public/packs-test
+
+# Node modules + Yarn
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore vendor/cache directory
+/vendor/cache/
 
