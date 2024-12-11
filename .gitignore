@@ -23,14 +23,35 @@
 !/storage/.keep
 
 /public/assets
+/public/uploads
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Ignore the bundler config file
+.bundle/
+/config/database.yml
+
+# Ignore any secrets or credentials file
+config/credentials.yml.enc
+config/secrets.yml
+
+# Ignore environment-specific files
+.env
+.env.*
+
+# Ignore any IDE or editor-specific files (e.g., VSCode, Sublime Text, etc.)
+.vscode/
 
 /public/packs
 /public/packs-test
+
+# Node modules + Yarn
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore vendor/cache directory
+/vendor/cache/
+
