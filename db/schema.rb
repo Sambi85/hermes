@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2024_12_13_014845) do
   create_table "conversations_users", id: false, force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.bigint "user_id", null: false
-    t.index ["conversation_id"], name: "index_conversations_users_on_conversation_id"
-    t.index ["user_id"], name: "index_conversations_users_on_user_id"
+    t.index ["conversation_id", "user_id"], name: "index_conversations_users_on_conversation_id_and_user_id", unique: true
+    t.index ["user_id", "conversation_id"], name: "index_conversations_users_on_user_id_and_conversation_id", unique: true
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 2024_12_13_014845) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "conversations_users", "conversations"
+  add_foreign_key "conversations_users", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
 end

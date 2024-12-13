@@ -1,5 +1,3 @@
-
-
 #Users
 user1 = User.create(name: 'Jane Doe', email: 'jane_doe@example.com')
 user2 = User.create(name: 'Solid Snake', email: 'solid_snake@example.com')
@@ -13,7 +11,7 @@ conversation2 = Conversation.create(name: '2 Person Chat')
 conversation2.users.concat([user1, user2])
 
 conversation3 = Conversation.create(name: '3 Person Chat')
-conversation3.users.concat([user1, user2, user3])m
+conversation3.users.concat([user1, user2, user3])
 
 #Message Model - Solo Conversation
 message1 = Message.create(user: user1, conversation: conversation1, body: "Looks like i'm talking to myself...")
