@@ -10,19 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_12_022034) do
+ActiveRecord::Schema.define(version: 2024_12_13_014845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "conversations", force: :cascade do |t|
+  create_table "conversations", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.integer "user_ids", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "messages", force: :cascade do |t|
+  create_table "conversations_users", id: false, force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["conversation_id"], name: "index_conversations_users_on_conversation_id"
+    t.index ["user_id"], name: "index_conversations_users_on_user_id"
+  end
+
+  create_table "messages", id: :serial, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "conversation_id", null: false
     t.text "body"
@@ -32,7 +38,7 @@ ActiveRecord::Schema.define(version: 2024_12_12_022034) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "twilio_credentials", force: :cascade do |t|
+  create_table "twilio_credentials", id: :serial, force: :cascade do |t|
     t.string "account_sid"
     t.string "auth_token"
     t.string "phone_number"
@@ -40,7 +46,7 @@ ActiveRecord::Schema.define(version: 2024_12_12_022034) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
