@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
   it "can be added to a conversation" do
     user = User.create!(name: "John Doe", email: "john@example.com")
     conversation = Conversation.create!(name: "General Chat")
-    conversation.users << user
+    conversation.add_users(user)
 
     expect(conversation.users).to include(user)
     expect(user.conversations).to include(conversation)
