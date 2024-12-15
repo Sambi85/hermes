@@ -4,11 +4,6 @@ class Conversation < ApplicationRecord
 
   validates :name, presence: true
 
-  # Adds a user to the conversation, rescuing from duplicate key errors
-  def add_users(user)
-    users << user
-  end
-
   private
 
   # Check if the user already exists in the conversation
