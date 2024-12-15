@@ -19,8 +19,8 @@ RSpec.describe Conversation, type: :model do
     user2 = User.create!(name: "Jane Doe", email: "jane@example.com")
     conversation = Conversation.create!(name: "General Chat")
     
-    conversation.add_users(user1)
-    conversation.add_users(user2)
+    conversation.users << user1
+    conversation.users << user2
     
     expect(conversation.users).to include(user1, user2)
     expect(user1.conversations).to include(conversation)
@@ -30,7 +30,7 @@ RSpec.describe Conversation, type: :model do
   it "can have messages" do
     user = User.create!(name: "John Doe", email: "john@example.com")
     conversation = Conversation.create!(name: "General Chat")
-    conversation.add_users(user)
+    conversation.users << user
     message = Message.create!(conversation: conversation, body: "Hello World", user: user)
     
     expect(conversation.messages).to include(message)
@@ -42,8 +42,8 @@ RSpec.describe Conversation, type: :model do
     user = User.create!(name: "John Doe", email: "john@example.com")
     conversation = Conversation.create!(name: "General Chat")
     
-    conversation.add_users(user)
-    conversation.add_users(user)  # Trying to add the same user again
+    conversation.users << user
+    conversation.users << user  # Trying to add the same user again
     
     conversation.valid?
     puts conversation.errors.full_messages
