@@ -1,5 +1,5 @@
 # hermes
-Sandbox Messaging App
+- a sandbox messaging App
 
 
 # Data Models
@@ -22,3 +22,7 @@ Message
 
 Twilo Crediental
 - no associations
+
+# Running Tests in Local
+RAILS_ENV=test bundle exec rspec
+RAILS_ENV=test bundle exec rspec spec/models/<TARGET MODEL NAME>_spec.rb
