@@ -1,24 +1,28 @@
-# README
+# hermes
+- a sandbox messaging App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+# Data Models
+User
+- has many + belongs to Conversations
+- has many messages
+*** has_and_belongs_to_many => association tells Rails to look for the join table
 
-* Ruby version
+Conversation
+- has many + belongs to Users
+- has many Messages
+*** has_and_belongs_to_many => association tells Rails to look for the join table
 
-* System dependencies
+User_Conversation
+- Join Table
 
-* Configuration
+Message
+- belongs to User
+- belongs to Conversation
 
-* Database creation
+Twilo Crediental
+- no associations
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Running Tests in Local
+RAILS_ENV=test bundle exec rspec
+RAILS_ENV=test bundle exec rspec spec/models/<TARGET MODEL NAME>_spec.rb
