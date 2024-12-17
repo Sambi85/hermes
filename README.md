@@ -1,6 +1,8 @@
-# hermes
+# Hermes
 - a sandbox messaging App
-
+- Simple Data Modeling
+- Unit Tests in Rspec
+- Logging
 
 # Data Models
 User
@@ -23,6 +25,16 @@ Message
 Twilo Crediental
 - no associations
 
-# Running Tests in Local
+# Notes on running tests your local
 RAILS_ENV=test bundle exec rspec
 RAILS_ENV=test bundle exec rspec spec/models/<TARGET MODEL NAME>_spec.rb
+
+# Notes on Logging
+Rails provides different log levels (debug, info, warn, error, fatal, unknown) which you can use depending on the importance of the message.
+
+debug: Detailed information, typically useful for debugging.
+info: General information about the application's operation.
+warn: Warnings about potential issues.
+error: Errors that occur in the application.
+fatal: Severe errors that cause the application to stop.
+unknown: Unknown messages that don't fit into other categories.
