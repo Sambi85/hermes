@@ -32,12 +32,12 @@ TwilioService
 
 # Data Models
 User
-  - has many + belongs to Conversations
+  - has_and_belongs_to_many to Conversations
   - has many messages
   *** has_and_belongs_to_many => association tells Rails to look for the join table
 
 Conversation
-  - has many + belongs to Users
+  - has_and_belongs_to_many to Users
   - has many Messages
   *** has_and_belongs_to_many => association tells Rails to look for the join table
 
@@ -50,6 +50,30 @@ Message
   - belongs to User
   - belongs to Conversation
 
+Messages_Users
+  - Join Table
+  - has_and_belongs_to_many messages
+  - has_and_belongs_to_many :recipients, class_name: 'User'
+  *** has_and_belongs_to_many => association tells Rails to look for the join table
+
+# Validations
+User
+  - Needs a unique username
+  - Needs a unique email address
+  - Needs a unique phone number
+
+Conversation
+  - Needs a name for the conversation
+
+User_Conversation
+  - Needs a unique pair => [:user_id, :conversation_id]
+
+Message
+  - Needs a body, 300 characters limit
+  - Needs a sender/user_id
+
+Messages_Users
+  - Needs a unique pair => [:message_id, :recipient_id]
 
 # Next Steps...
 - Test Twilio API connection
@@ -60,7 +84,14 @@ Message
 - validate email address with method/regular expression
 - validate phone number with method/regular expression
 - Group Messages: need to make single message per each user
-- db migration on Message table, receipient_id => array of user_ids
 - Permissions => Admin, User
 - Add OAuth 2 to User model
 - Frontend lay out => Hotwire? or React?
+- DRY up test suite, let's make more fixtures
+- Touch ups in test suite => Let's do some linting
+- Touch ups in app => Let's do some linting
+
+# Troublshooting + Testing
+Run tests in local environment
+  - RAILS_ENV=test bundle exec rspec
+  - RAILS_ENV=test bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
