@@ -2,7 +2,8 @@
 - a sandbox messaging App
 - Simple Data Modeling
 - Unit Tests in Rspec
-- Logging
+- Basic logging strategy
+- Twilio API gem for messaging
 
 # Data Models
 User
@@ -17,6 +18,8 @@ Conversation
 
 User_Conversation
 - Join Table
+- Foreign Key => User_id
+- Foreign Key => Conversation_id
 
 Message
 - belongs to User
