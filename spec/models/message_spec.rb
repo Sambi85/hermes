@@ -8,7 +8,7 @@ RSpec.describe Message, type: :model do
     it { should validate_presence_of(:user) }
 
     it "is invalid if the body exceeds 300 characters" do
-      user = User.create!(name: "John Doe", email: "john@example.com")
+      user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
       conversation = Conversation.create!(name: "General Chat")
       message = Message.new(body: "a" * 301, user: user, conversation: conversation)
 
@@ -17,7 +17,7 @@ RSpec.describe Message, type: :model do
     end
 
     it "is valid if the body is 300 characters or fewer" do
-      user = User.create!(name: "John Doe", email: "john@example.com")
+      user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
       conversation = Conversation.create!(name: "General Chat")
       message = Message.new(body: "a" * 300, user: user, conversation: conversation)
 
@@ -31,7 +31,7 @@ RSpec.describe Message, type: :model do
     end
   
     it "is invalid without a conversation" do
-      user = User.create!(name: "John Doe", email: "john@example.com")
+      user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
       message = Message.new(body: "Hello, world!", user: user)
       expect(message.valid?).to be(false)
       expect(message.errors[:conversation]).to include("must exist")

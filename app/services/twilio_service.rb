@@ -18,5 +18,6 @@ class TwilioService
     rescue Twilio::REST::RestError => e
       Rails.logger.error "Error failed to send message: #{e.message}"
       raise
+    end
   end
 end
