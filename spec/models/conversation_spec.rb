@@ -15,8 +15,8 @@ RSpec.describe Conversation, type: :model do
   it { should have_many(:messages) }
 
   it "can have users" do
-    user1 = User.create!(name: "John Doe", email: "john@example.com")
-    user2 = User.create!(name: "Jane Doe", email: "jane@example.com")
+    user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+    user2 = User.create!(name: "Jane Doe", email: "jane@example.com", phone_number: "9876543210")
     conversation = Conversation.create!(name: "General Chat")
     
     conversation.users << user1
@@ -28,7 +28,7 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "can have messages" do
-    user = User.create!(name: "John Doe", email: "john@example.com")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
     conversation = Conversation.create!(name: "General Chat")
     conversation.users << user
     message = Message.create!(conversation: conversation, body: "Hello World", user: user)
@@ -39,7 +39,7 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "does not add the same user twice" do
-    user = User.create!(name: "John Doe", email: "john@example.com")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
     conversation = Conversation.create!(name: "General Chat")
     
     conversation.users << user
@@ -50,7 +50,7 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "does not allow for direct modification of users" do
-    user = User.create!(name: "John Doe", email: "john@example.com")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")  
     conversation = Conversation.create!(name: "General Chat")
     
     begin
