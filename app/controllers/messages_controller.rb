@@ -4,8 +4,18 @@ class MessagesController < ApplicationController
   # POST /messages
   def create
     @message = Message.new(message_params)
+
     if @message.save
       Rails.logger.info "Successfully created message ID: #{@message.id}"
+      twilio_service = TwiloService.new
+
+      # WIP: Adding the recipient_ids in next PR... 
+      # twilio_service.send_message(
+      #   from: @message.user.phone_number,
+      #   to: @message.recipient_ids,
+      #   body: @message.body
+      # )
+      
       redirect_to conversation_path(@message.conversation), notice: 'Message was successfully created.'
     else
       Rails.logger.warn "Failed to create message: #{@message.errors.full_messages.join(', ')}"
