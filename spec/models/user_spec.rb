@@ -3,24 +3,35 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   it "is valid with a name and email" do
-    user = User.new(name: "John Doe", email: "john@example.com")
+    user = User.new(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
     expect(user).to be_valid
   end
 
-  it "is invalid without a name" do
-    user = User.new(name: nil, email: "john@example.com")
+  it "is invalid without a name or phone number" do
+    user = User.new(name: nil, email: "john@example.com", phone_number: "1234567890")
     expect(user).not_to be_valid
   end
 
   it "is invalid without an email" do
-    user = User.new(name: "John Doe", email: nil)
+    user = User.new(name: "John Doe", email: nil, phone_number: "1234567890")
+    expect(user).not_to be_valid
+  end
+
+  it "is invalid without a phone number" do
+    user = User.new(name: "John Doe", email: "john@example.com", phone_number: nil)
     expect(user).not_to be_valid
   end
 
   it "is invalid with a duplicate email" do
-    User.create!(name: "John Doe", email: "john@example.com")
-    user = User.new(name: "Jane Doe", email: "john@example.com")
+    User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+    user = User.new(name: "Jane Doe", email: "john@example.com", phone_number: "1234567890")
     expect(user).not_to be_valid
+  end
+
+  it "is invalid with a duplicate phone number" do
+      User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+      user = User.new(name: "Jane Doe", email: "jane@example.com", phone_number: "1234567890")
+      expect(user).not_to be_valid
   end
 
   # Test associations
@@ -29,7 +40,7 @@ RSpec.describe User, type: :model do
 
   # Test HABTM relationship (User can be added to a conversation)
   it "can be added to a conversation" do
-    user = User.create!(name: "John Doe", email: "john@example.com")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
     conversation = Conversation.create!(name: "General Chat")
     conversation.users << user 
 
@@ -39,7 +50,7 @@ RSpec.describe User, type: :model do
 
   # Test messages association
   it "can have messages" do
-    user = User.create!(name: "John Doe", email: "john@example.com")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
     conversation = Conversation.create!(name: "General Chat")
     conversation.users << user
     message = Message.create!(conversation: conversation, body: "Hello World", user: user)

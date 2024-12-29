@@ -13,7 +13,7 @@ class ConversationsController < ApplicationController
   def show
     @messages = @conversation.messages
     Rails.logger.info "Fetched #{@messages.count} messages for conversation #{@conversation.id}"
-  rescue => 
+  rescue => e
     Rails.logger.error "Error fetching messages for conversation #{@conversation.id}: #{e.message}"
   end
   

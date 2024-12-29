@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_13_014845) do
+ActiveRecord::Schema.define(version: 2024_12_29_050238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,19 +38,12 @@ ActiveRecord::Schema.define(version: 2024_12_13_014845) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "twilio_credentials", id: :serial, force: :cascade do |t|
-    t.string "account_sid"
-    t.string "auth_token"
-    t.string "phone_number"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "phone_number", null: false
   end
 
   add_foreign_key "conversations_users", "conversations"
