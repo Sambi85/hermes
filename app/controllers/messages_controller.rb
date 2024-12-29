@@ -8,10 +8,13 @@ class MessagesController < ApplicationController
     if @message.save
       Rails.logger.info "Successfully created message ID: #{@message.id}"
       twilio_service = TwiloService.new
-      twilio_service.send_message(
-        to: @message.user.phone_number,
-        body: @message.body
-      )
+
+      # WIP: Adding the recipient_ids in next PR... 
+      # twilio_service.send_message(
+      #   from: @message.user.phone_number,
+      #   to: @message.recipient_ids,
+      #   body: @message.body
+      # )
       
       redirect_to conversation_path(@message.conversation), notice: 'Message was successfully created.'
     else
