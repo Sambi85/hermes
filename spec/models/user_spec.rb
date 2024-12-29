@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'pry'
 RSpec.describe User, type: :model do
 
   it "is valid with a name and email" do
@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
 
   # Test associations
   it { should have_and_belong_to_many(:conversations) }
-  it { should have_many(:messages) }
+  it { should have_and_belong_to_many(:messages) }
 
   # Test HABTM relationship (User can be added to a conversation)
   it "can be added to a conversation" do
@@ -49,13 +49,17 @@ RSpec.describe User, type: :model do
   end
 
   # Test messages association
-  it "can have messages" do
-    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+  it "can have messages + recipients" do
+    user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+    user2 = User.create!(name: "Jimmy Dobber", email: "jimmy_d@example.com", phone_number: "1224567890")
+  
     conversation = Conversation.create!(name: "General Chat")
-    conversation.users << user
-    message = Message.create!(conversation: conversation, body: "Hello World", user: user)
-    
-    expect(user.messages).to include(message)
-    expect(message.user).to eq(user)
+    conversation.users << user1
+    conversation.users << user2
+  
+    message = Message.create!(conversation: conversation, body: "Hello World", user: user1, recipients: [user2])
+  
+    expect(message.recipients).to include(user2)
+    expect(message.user).to eq(user1)
   end
 end
