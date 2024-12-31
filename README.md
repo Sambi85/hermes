@@ -79,8 +79,6 @@ Messages_Users
 - Test Twilio API connection (waiting on Twilio)
 - Setup redis for ActionCable
 - Add ActionCable + Channels for real time messaging
-- validate email address with method/regular expression
-- validate phone number with method/regular expression
 - Permissions => Admin, User
 - Add OAuth 2 to User model
 - Frontend lay out => Hotwire? or React?
