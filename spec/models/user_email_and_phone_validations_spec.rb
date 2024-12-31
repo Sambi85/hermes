@@ -19,7 +19,6 @@ RSpec.describe User, type: :model do
 
       # Email with spaces, should be trimmed and converted to lowercase
       user = User.new(name: "John Doe", email: valid_email_with_spaces, phone_number: "01234567890")
-      binding.pry
       user.save!
       expect(user.email).to eq('crab@example.com') # Ensure email is properly formatted
 
