@@ -95,3 +95,7 @@ Messages_Users
 Run tests in local environment
   - RAILS_ENV=test bundle exec rspec
   - RAILS_ENV=test bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
+
+Using Phone Number in Twilio
+  - E.164 is the international telephone numbering plan that ensures each device on the PSTN has globally unique number.
+  - Vist here: https://www.twilio.com/docs/glossary/what-e164
