@@ -6,6 +6,7 @@ ruby '3.0.2'
 gem 'rails', '6.1.7.10'
 # gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'pg', '~> 1.1' # Use postgresql for Active Record
+gem 'redis'
 gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '>= 4.0'
