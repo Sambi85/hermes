@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/actioncable/5.2.3/action_cable.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #messages { margin-bottom: 20px; }
+    #message_input { width: 80%; padding: 10px; }
+    #send_button { padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Chat Room</h1>
+  <div id="messages"></div>
+  <input type="text" id="message_input" placeholder="Type a message..." />
+  <button id="send_button">Send</button>
+
+  <script>
+    // Create the ActionCable connection
+    const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
+
+    // Define the channel to connect to (using a specific room)
+    const roomChannel = cable.subscriptions.create(
+      { channel: 'RoomChannel', room: '123' },
+      {
+        connected() {
+          console.log('Connected to the chat room!');
+        },
+
+        disconnected() {
+          console.log('Disconnected from the chat room.');
+        },
+
+        received(data) {
+          // When a message is received, display it in the messages div
+          const messageDiv = document.createElement('div');
+          messageDiv.innerText = data.message;
+          document.getElementById('messages').appendChild(messageDiv);
+        },
+
+        sendMessage(message) {
+          this.perform('send_message', { message: message });
+        }
+      }
+    );
+
+    // When the user clicks "Send", send the message to the channel
+    document.getElementById('send_button').addEventListener('click', () => {
+      const messageInput = document.getElementById('message_input');
+      const message = messageInput.value;
+      if (message) {
+        roomChannel.sendMessage(message);  // Send the message via ActionCable
+        messageInput.value = '';  // Clear the input after sending
+      }
+    });
+  </script>
+</body>
+</html>

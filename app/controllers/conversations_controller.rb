@@ -11,7 +11,17 @@ class ConversationsController < ApplicationController
   
   # GET /conversations/:id
   def show
+    @conversation = Conversation.find_by(id: params[:conversation_id])
+    if @conversation.nil?
+      flash[:alert] = "Conversation not found"
+      redirect_to conversations_path # or any other path you'd like
+      return
+    end
+  
+    @current_user = OpenStruct.new(name: 'Test User Name') # Place holder for testing... 
+    @current_user.reload
     @messages = @conversation.messages
+  
     Rails.logger.info "Fetched #{@messages.count} messages for conversation #{@conversation.id}"
   rescue => e
     Rails.logger.error "Error fetching messages for conversation #{@conversation.id}: #{e.message}"
@@ -55,6 +65,10 @@ class ConversationsController < ApplicationController
   rescue => e
     Rails.logger.error "Error destroying conversation: #{e.message}"
     redirect_to conversations_url, alert: 'Failed to destroy conversation.'
+  end
+
+  def debug_chat
+    @messages = @conversation.messages  # debugging: show all messages in the conversation
   end
   
   private

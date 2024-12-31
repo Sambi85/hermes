@@ -2,7 +2,11 @@ class ChatChannel < ApplicationCable::Channel
   def subscribed
     @conversation = Conversation.find(params[:conversation_id])
 
-    stream_for @conversation
+    if @conversation
+      stream_for @conversation
+    else
+      reject # Reject the connection if the conversation doesn't exist
+    end
   end
 
   def unsubscribed
@@ -10,8 +14,13 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def send_message(data)
-    message = @conversation.messages.create!(user: current_user, content: data['message'])
-
-    ActionCable.server.broadcast("chat_#{@conversation.id}_channel", message: message.content, user: current_user.username)
+    if current_user
+      message = @conversation.messages.create!(user: current_user, body: data['message'])
+      # Broadcast the message body and username to the channel
+      broadcast_to(@conversation, message: message.body, user: current_user.username)
+    else
+      reject
+    end
   end
+
 end
