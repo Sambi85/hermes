@@ -1,0 +1,12 @@
+<!-- app/views/chat/show.html.erb -->
+<div id="chat-room" data-room-id="<%= @room.id %>">
+    <div id="messages">
+      <!-- Messages will appear here -->
+    </div>
+  
+    <%= form_with url: '#', id: 'chat-message-form', local: false do |form| %>
+      <%= form.text_area :message, id: 'chat-message-input' %>
+      <%= form.submit 'Send' %>
+    <% end %>
+  </div>
+  

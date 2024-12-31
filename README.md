@@ -60,7 +60,8 @@ Messages_Users
 User
   - Needs a unique username
   - Needs a unique email address
-  - Needs a unique phone number
+  - Needs a unique phone number, US only for now
+  - phone number must be 11 to 16 digits (country code)
 
 Conversation
   - Needs a name for the conversation
@@ -77,14 +78,17 @@ Messages_Users
 
 # Next Steps...
 - Test Twilio API connection (waiting on Twilio)
-- Setup redis for ActionCable
-- Add ActionCable + Channels for real time messaging
 - Permissions => Admin, User
 - Add OAuth 2 to User model
 - Frontend lay out => Hotwire? or React?
 - DRY up test suite, let's make more fixtures
 - Touch ups in test suite => Let's do some linting
 - Touch ups in app => Let's do some linting
+- Add pry to test suite configs
+- Add pry to app configs (development, test)
+
+# Notes on Dependdencies
+- Gem conflict with ActionCable and Redis 5.3.0
 
 # Troublshooting + Testing
 Run tests in local environment
