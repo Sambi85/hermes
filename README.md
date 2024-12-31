@@ -76,14 +76,11 @@ Messages_Users
   - Needs a unique pair => [:message_id, :recipient_id]
 
 # Next Steps...
-- Test Twilio API connection
-- Add rate limiting to Twilio API connection
-- Write a mock test to check Twilio API connection, Webmock
-- Setup redis
+- Test Twilio API connection (waiting on Twilio)
+- Setup redis for ActionCable
 - Add ActionCable + Channels for real time messaging
 - validate email address with method/regular expression
 - validate phone number with method/regular expression
-- Group Messages: need to make single message per each user
 - Permissions => Admin, User
 - Add OAuth 2 to User model
 - Frontend lay out => Hotwire? or React?
