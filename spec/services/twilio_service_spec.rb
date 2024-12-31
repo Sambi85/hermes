@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe TwilioService, type: :service do
   let(:twilio_service) { TwilioService.new }
   let(:test_phone_number) { ENV['TEST_PHONE_NUMBER'] }
+  let(:phone_number) { '1234567890' }
 
   before do
-    # This is a Stub, Twilio client does not actually try to send an SMS here
+    # Stub the Twilio API call to avoid sending real messages
     allow(twilio_service).to receive(:send_message).and_return(double('Message', sid: 'fake_sid'))
   end
 
@@ -18,7 +19,6 @@ RSpec.describe TwilioService, type: :service do
           body: 'TEST MESSAGE: This is a test message from your Twilio integration.'
         )
 
- 
         twilio_service.send_test_message
       end
     end
