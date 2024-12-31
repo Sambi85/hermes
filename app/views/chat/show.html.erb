@@ -1,0 +1,21 @@
+<body id="current_user" data-username="<%= @current_user&.name || 'Current User' %>">
+  <h1>Chat in Conversation(Debug Mode): <%= @conversation.name %></h1>
+
+  <!-- Add data-conversation-id to the chat div for dynamic fetching -->
+  <div id="chat" data-conversation-id="<%= @conversation.id %>">
+    <!-- Messages container -->
+    <div id="messages">
+      <% @conversation.messages.each do |message| %>
+        <!-- Check if the current user is the sender or recipient -->
+        <div class="message <%= message.user.name == @current_user.name ? 'sender' : 'recipient' %>">
+          <span class="username"><%= message.user.name %></span>
+          <span class="message-text"><%= message.body %></span>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Message input form -->
+    <input type="text" id="message_input" placeholder="Type a message..." />
+    <button id="send_button">Send</button>
+  </div>
+</body>
