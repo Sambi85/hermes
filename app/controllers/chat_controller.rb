@@ -1,6 +1,5 @@
-# app/controllers/chat_controller.rb
 class ChatController < ApplicationController
   def show
-    @room = Room.find(params[:id])
+    @room = Conversation.find(params[:conversation_id])
   end
 end

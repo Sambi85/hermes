@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: [:show, :edit, :update, :destroy]
-    
+
   # GET /conversations
   def index
     @conversations = Conversation.all
@@ -8,7 +8,7 @@ class ConversationsController < ApplicationController
   rescue => e
     Rails.logger.error "Error fetching all conversations: #{e.message}"
   end
-  
+
   # GET /conversations/:id
   def show
     @messages = @conversation.messages
@@ -16,7 +16,7 @@ class ConversationsController < ApplicationController
   rescue => e
     Rails.logger.error "Error fetching messages for conversation #{@conversation.id}: #{e.message}"
   end
-  
+
   # POST /conversations
   def create
     @conversation = Conversation.new(conversation_params)
@@ -32,7 +32,7 @@ class ConversationsController < ApplicationController
     Rails.logger.error "Error creating conversation: #{e.message}"
     render :new
   end
-  
+
   # PATCH/PUT /conversations/:id
   def update
     if @conversation.update(conversation_params)
@@ -46,7 +46,7 @@ class ConversationsController < ApplicationController
     Rails.logger.error "Error updating conversation: #{e.message}"
     render :edit
   end
-  
+
   # DELETE /conversations/:id
   def destroy
     @conversation.destroy
@@ -56,16 +56,16 @@ class ConversationsController < ApplicationController
     Rails.logger.error "Error destroying conversation: #{e.message}"
     redirect_to conversations_url, alert: 'Failed to destroy conversation.'
   end
-  
+
   private
-  
+
   def set_conversation
     @conversation = Conversation.find(params[:id])
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error "Error finding conversation ID:#{params[:id]}, message: #{e.message}"
     redirect_to conversations_url, alert: 'Conversation not found.'
   end
-  
+
   def conversation_params
     params.require(:conversation).permit(:name, user_ids: [])
   end
