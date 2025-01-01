@@ -1,0 +1,67 @@
+name: Run Tests on Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        options: --health-cmd="pg_isready -U postgres" --health-timeout=30s --health-retries=3
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_database
+
+      redis:
+        image: redis:6
+        ports:
+          - 6379:6379
+
+    env:
+      DEFAULT_ADAPTER: postgresql
+      DEFAULT_ENCODING: unicode
+      DEFAULT_POOL: 5
+      DEFAULT_USERNAME: postgres
+      DEFAULT_PASSWORD: postgres
+      DEFAULT_HOST: localhost
+      DEFAULT_PORT: 5432
+      TEST_DATABASE: test_database
+      TEST_USERNAME: postgres
+      TEST_PASSWORD: postgres
+      TEST_HOST: localhost
+      REDIS_URL: redis://localhost:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.2'
+
+      - name: Install dependencies
+        run: |
+          set -x
+          gem install bundler | tee bundler_install.log
+          bundle install | tee bundle_install.log
+
+      - name: Set up database (Postgres)
+        run: |
+          set -x
+          bin/rails db:create | tee db_create.log
+          bin/rails db:migrate | tee db_migrate.log
+          bin/rails db:seed | tee db_seed.log
+
+      - name: Run tests
+        run: |
+          set -x
+          bundle exec rspec | tee rspec_output.log
