@@ -77,15 +77,11 @@ Messages_Users
   - Needs a unique pair => [:message_id, :recipient_id]
 
 # Next Steps...
-- Test Twilio API connection (waiting on Twilio)
-- Permissions => Admin, User
-- Add OAuth 2 to User model
 - Frontend lay out => Hotwire? or React?
-- DRY up test suite, let's make more fixtures
 - Touch ups in test suite => Let's do some linting
 - Touch ups in app => Let's do some linting
-- Add pry to test suite configs
 - Add pry to app configs (development, test)
+- Test Twilio API connection (waiting on Twilio)
 
 # Notes on Dependdencies
 - Gem conflict with ActionCable and Redis 5.3.0
