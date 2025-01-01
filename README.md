@@ -92,8 +92,8 @@ Messages_Users
 
 # Troublshooting + Testing
 Run tests in local environment
-  - RAILS_ENV=test bundle exec rspec
-  - RAILS_ENV=test bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
+  - RAILS_ENV=development bundle exec rspec
+  - RAILS_ENV=development bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
 
 Debugging in Browser
   - branch => qa-environment-debugging-in-browser
@@ -101,4 +101,4 @@ Debugging in Browser
 
 Using Phone Number in Twilio
   - E.164 is the international telephone numbering plan that ensures each device on the PSTN has globally unique number.
-  - Vist here: https://www.twilio.com/docs/glossary/what-e164
+  - Vist here: https://www.twilio.com/docs/glossary/what-e164u should configure your model like this:
