@@ -46,5 +46,9 @@ config/secrets.yml
 yarn-debug.log*
 .yarn-integrity
 
+
 # Ignore vendor/cache directory
 /vendor/cache/
+
+# Other ignored files
+/dump.rdb
