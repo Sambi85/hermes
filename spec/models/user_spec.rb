@@ -25,14 +25,13 @@ RSpec.describe User, type: :model do
   it "is invalid with a duplicate email" do
     User.create!(name: "John Doe", email: "john@example.com", phone_number: "12345678901")
     user = User.new(name: "Jane Doe", email: "john@example.com", phone_number: "12345678902")
-    
+
     expect(user).not_to be_valid
   end
 
   it "is invalid with a duplicate phone number" do
       User.create!(name: "John Doe", email: "john@example.com", phone_number: "12345678930")
       user = User.new(name: "Jane Doe", email: "jane@example.com", phone_number: "12345678930")
-      user.save!
       expect(user).not_to be_valid
   end
 
@@ -54,14 +53,16 @@ RSpec.describe User, type: :model do
   it "can have messages + recipients" do
     user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "12345677890")
     user2 = User.create!(name: "Jimmy Dobber", email: "jimmy_d@example.com", phone_number: "12274567890")
-  
+
     conversation = Conversation.create!(name: "General Chat")
     conversation.users << user1
     conversation.users << user2
   
+    # Create message with recipients
     message = Message.create!(conversation: conversation, body: "Hello World", user: user1, recipients: [user2])
   
     expect(message.recipients).to include(user2)
     expect(message.user).to eq(user1)
   end
+  
 end
