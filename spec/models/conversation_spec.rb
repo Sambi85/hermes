@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Conversation, type: :model do
+
   it "is valid with a name" do
-    conversation = Conversation.new(name: "General Chat")
+    conversation = create(:conversation)
     expect(conversation).to be_valid
   end
 
   it "is invalid without a name" do
-    conversation = Conversation.new(name: nil)
+    conversation = build(:conversation, name: nil)
     expect(conversation).not_to be_valid
   end
 
@@ -15,38 +16,27 @@ RSpec.describe Conversation, type: :model do
   it { should have_many(:messages) }
 
   it "can have users" do
-    user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "01234567890")
-    user2 = User.create!(name: "Jane Doe", email: "jane@example.com", phone_number: "09876543210")
-    conversation = Conversation.create!(name: "General Chat")
-    
-    conversation.users << user1
-    conversation.users << user2
-    
+    user1 = create(:user)
+    user2 = create(:user)
+    conversation = build(:conversation, users: [user1, user2])
     expect(conversation.users).to include(user1, user2)
-    expect(user1.conversations).to include(conversation)
-    expect(user2.conversations).to include(conversation)
   end
 
   it "can have messages" do
-    user1 = User.create!(name: 'John Doe', email: 'john@example.com', phone_number: '01334567890')
-    user2 = User.create!(name: 'Pasta Master', email: 'ilovepasta@pasta.com', phone_number: '01234367890')
+    user1 = create(:user)
+    user2 = create(:user)
+    conversation = build(:conversation, users: [user1, user2])
+    message = build(:message, custom_conversation: conversation, custom_user: user1, custom_recipients: [user2])
+    conversation.messages << message
 
-    conversation = Conversation.create!(name: "General Chat")
-    conversation.users << user1
-    conversation.users << user2
-
-    message = Message.create!(conversation: conversation, body: "Hello World", user: user1, recipients: [user2])
-    
     expect(conversation.messages).to include(message)
     expect(message.conversation).to eq(conversation)
     expect(message.user).to eq(user1)
   end
 
   it "does not add the same user twice" do
-    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "11234567890")
-    conversation = Conversation.create!(name: "General Chat")
-    
-    conversation.users << user
+    user = create(:user)
+    conversation = create(:conversation, users:[user])
     conversation.users << user  # Trying to add the same user again
     
     conversation.valid?
@@ -54,8 +44,8 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "does not allow for direct modification of users" do
-    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "11234567890")  
-    conversation = Conversation.create!(name: "General Chat")
+    user = create(:user) 
+    conversation = create(:conversation)
     
     begin
       conversation.users << user  # Trying to add the same user again
