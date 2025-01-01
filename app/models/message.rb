@@ -8,7 +8,7 @@ class Message < ApplicationRecord
   before_validation :must_have_at_least_one_recipient
 
   after_create_commit do
-    broadcast_to conversation, message: self.content
+    broadcast_to conversation, message: self.body
   end
 
   def must_have_at_least_one_recipient
