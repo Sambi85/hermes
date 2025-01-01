@@ -1,5 +1,5 @@
 # Hermes
-![My Image](images/hermes-logo.jpeg)
+![My Image](public/hermes-logo.jpeg)
 I've always wanted to build a chat app as a side project. In this project I'll be utilizing Action Cable + SMS messaging. I'm excited to share my progress with you. 
 
 # Frameworks
