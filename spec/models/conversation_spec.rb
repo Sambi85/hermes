@@ -15,8 +15,8 @@ RSpec.describe Conversation, type: :model do
   it { should have_many(:messages) }
 
   it "can have users" do
-    user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
-    user2 = User.create!(name: "Jane Doe", email: "jane@example.com", phone_number: "9876543210")
+    user1 = User.create!(name: "John Doe", email: "john@example.com", phone_number: "01234567890")
+    user2 = User.create!(name: "Jane Doe", email: "jane@example.com", phone_number: "09876543210")
     conversation = Conversation.create!(name: "General Chat")
     
     conversation.users << user1
@@ -28,10 +28,13 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "can have messages" do
-    user1 = User.create!(name: 'John Doe', email: 'john@example.com', phone_number: '1234567890')
-    user2 = User.create!(name: 'Pasta Master', email: 'ilovepasta@pasta.com', phone_number: '+1234567890')
+    user1 = User.create!(name: 'John Doe', email: 'john@example.com', phone_number: '01334567890')
+    user2 = User.create!(name: 'Pasta Master', email: 'ilovepasta@pasta.com', phone_number: '01234367890')
+
     conversation = Conversation.create!(name: "General Chat")
     conversation.users << user1
+    conversation.users << user2
+
     message = Message.create!(conversation: conversation, body: "Hello World", user: user1, recipients: [user2])
     
     expect(conversation.messages).to include(message)
@@ -40,7 +43,7 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "does not add the same user twice" do
-    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "11234567890")
     conversation = Conversation.create!(name: "General Chat")
     
     conversation.users << user
@@ -51,7 +54,7 @@ RSpec.describe Conversation, type: :model do
   end
 
   it "does not allow for direct modification of users" do
-    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "1234567890")  
+    user = User.create!(name: "John Doe", email: "john@example.com", phone_number: "11234567890")  
     conversation = Conversation.create!(name: "General Chat")
     
     begin

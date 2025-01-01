@@ -12,10 +12,10 @@ ActiveStorage.start()
 document.addEventListener("DOMContentLoaded", () => {
     const messageInput = document.getElementById("chat-message-input");
     const form = document.getElementById("chat-message-form");
-  
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-  
+
       const message = messageInput.value;
       if (message) {
         chatChannel.sendMessage(message); // Send message via WebSocket
