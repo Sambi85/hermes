@@ -1,5 +1,7 @@
 # Hermes
 ![My Image](public/hermes-logo.jpeg)
+
+
 I've always wanted to build a chat app as a side project. In this project I'll be utilizing Action Cable + SMS messaging. I'm excited to share my progress with you. 
 
 # Frameworks
@@ -78,11 +80,16 @@ Messages_Users
   - Needs a unique pair => [:message_id, :recipient_id]
 
 # Next Steps...
-- Frontend lay out => Hotwire? or React?
+- Frontend lay out => React
+- Debug Frontend lay out for BE => Hotwire
 - Touch ups in test suite => Let's do some linting
 - Touch ups in app => Let's do some linting
 - Add pry to app configs (development, test)
 - Test Twilio API connection (waiting on Twilio)
+- Write Rspec tests for Routes
+- Write Rspec tests for Devise 
+- Write Functional Tests for API V1
+- Simp
 
 # Notes on Dependdencies
 - Gem conflict with ActionCable and Redis 5.3.0
