@@ -16,11 +16,14 @@ class MessagesController < ApplicationController
       @message.recipients << recipients
       message_users = recipients.map { |recipient| { message_id: @message.id, user_id: recipient.id } }
       
-      #Bulk Insert to guard againist N + 1
-      MessageUser.insert_all(message_users)
+      MessageUser.insert_all(message_users) # Bulk Insert to guard against N + 1 queries
 
-      send_sms_messages(recipients, @message)
-      
+      ChatChannel.broadcast_to(
+        @message.conversation,
+        message: render_message(@message)
+        )
+        
+      # send_sms_messages(recipients, @message)
       redirect_to conversation_path(@message.conversation), notice: 'Message was successfully created.'
     else
       Rails.logger.warn "Failed to create message: #{@message.errors.full_messages.join(', ')}"
@@ -39,9 +42,18 @@ class MessagesController < ApplicationController
     redirect_to conversations_path, alert: 'Message not found.'
   end
 
+  # GET /messages
+  def index
+    # @messages = @conversation.messages.order(created_at: :asc)  # Retrieve messages for the conversation
+    # render json: @messages, status: :ok
+  end
+
+
   def fetch_recipients(recipient_ids)
-    # May need to shape this data further for forms...
-    User.where(id: recipient_ids)
+    puts "Recipient IDs: #{recipient_ids}"
+    conversation = Conversation.find(params[:message][:conversation_id])
+
+    User.where(id: recipient_ids).where(id: conversation.users.pluck(:id))
   end
 
   def send_sms_messages(recipients, message)
@@ -55,13 +67,10 @@ class MessagesController < ApplicationController
     end
   end
 
-
-  
   private
   
   def set_message
     @message = Message.find(params[:id])
-
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error "Message ID: #{params[:id]} not found, message: #{e.message}"
     redirect_to conversations_url, alert: 'Message not found.'
@@ -69,5 +78,12 @@ class MessagesController < ApplicationController
   
   def message_params
     params.require(:message).permit(:user_id, :conversation_id, :body, recipient_ids: [])
+  end
+
+  # Render the message in the format that will be broadcast to clients
+  def render_message(message)
+    ApplicationController.renderer.render(
+      partial: 'messages/message', locals: { message: message }
+    )
   end
 end

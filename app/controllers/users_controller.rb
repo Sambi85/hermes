@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   
   # POST /users
   def create
+    binding.pry
     @user = User.new(user_params)
     if @user.save
       Rails.logger.info "Successfully created user ID: #{@user.id}, username: #{@user.name}"

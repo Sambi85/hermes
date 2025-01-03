@@ -1,6 +1,9 @@
 # Hermes
 ![My Image](public/hermes-logo.jpeg)
-I've always wanted to build a chat app as a side project. In this project I'll be utilizing Action Cable + SMS messaging. I'm excited to share my progress with you. 
+
+
+# Summary
+This project is a chat application built using Action Cable and SMS messaging. The goal is to create a real-time, interactive chat experience where users can communicate via both web and text messages. By leveraging Action Cable for seamless WebSocket connections and integrating SMS functionality, the app enables users to send and receive messages on the go. This side project will showcase my ability to combine modern web technologies with traditional communication methods, and I'll be documenting my progress here. Stay tuned for updates as I continue to develop and refine this project!
 
 # Frameworks
   - Ruby on Rails => for the backend
@@ -78,11 +81,15 @@ Messages_Users
   - Needs a unique pair => [:message_id, :recipient_id]
 
 # Next Steps...
-- Frontend lay out => Hotwire? or React?
+- Frontend lay out => React
+- Debug Frontend lay out for BE => Hotwire
 - Touch ups in test suite => Let's do some linting
 - Touch ups in app => Let's do some linting
 - Add pry to app configs (development, test)
 - Test Twilio API connection (waiting on Twilio)
+- Write Rspec tests for Routes
+- Write Rspec tests for Devise 
+- Write Functional Tests for API V1
 
 # Notes on Dependdencies
 - Gem conflict with ActionCable and Redis 5.3.0
@@ -92,7 +99,50 @@ Run tests in local environment
   - RAILS_ENV=development bundle exec rspec
   - RAILS_ENV=development bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
 
-Debugging in Browser
+
+# Testing Endpoints w/ Curl Commands
+User:
+curl -X GET http://localhost:3000/api/v1/users/1
+curl -X DELETE http://localhost:3000/api/v1/users/1
+curl -X POST http://localhost:3000/api/v1/users \
+-H "Content-Type: application/json" \
+-d '{
+  "user": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone_number": "114234567890",
+    "password": "password1",
+    "password_confirmation": "password1"
+  }
+}'
+
+Conversations:
+curl -X GET http://localhost:3000/api/v1/conversations/1
+curl -X DELETE http://localhost:3000/api/v1/conversations/1
+curl -X POST http://localhost:3000/api/v1/conversations \
+  -H "Content-Type: application/json" \
+  -d '{
+    "conversation": {
+      "name": "New Conversation",
+      "user_ids": [1, 2]
+    }
+  }'
+
+Messages:
+curl -X GET http://localhost:3000/api/v1/messages/1
+curl -X GET http://localhost:3000/api/v1/conversations/1/messages
+curl -X DELETE http://localhost:3000/api/v1/messages/1
+curl -X POST http://localhost:3000/api/v1/conversations/6/messages \
+  -H "Content-Type: application/json" \
+  -d '{
+        "message": {
+          "body": "Hello, this is a new message!",
+          "user_id": 1, 
+          "recipient_ids": [2, 3]
+        }
+      }'
+
+Debugging in Browser(WIP)
   - branch => qa-environment-debugging-in-browser
   - url => http://localhost:3000/conversations/1/debug/chat/1
 
