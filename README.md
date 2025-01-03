@@ -89,7 +89,6 @@ Messages_Users
 - Write Rspec tests for Routes
 - Write Rspec tests for Devise 
 - Write Functional Tests for API V1
-- Simp
 
 # Notes on Dependdencies
 - Gem conflict with ActionCable and Redis 5.3.0
@@ -98,6 +97,49 @@ Messages_Users
 Run tests in local environment
   - RAILS_ENV=development bundle exec rspec
   - RAILS_ENV=development bundle exec rspec spec/models/<YOUR TARGET TEST FILE>.rb
+
+
+# Testing Endpoints w/ Curl Commands
+User:
+curl -X GET http://localhost:3000/api/v1/users/1
+curl -X DELETE http://localhost:3000/api/v1/users/1
+curl -X POST http://localhost:3000/api/v1/users \
+-H "Content-Type: application/json" \
+-d '{
+  "user": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone_number": "114234567890",
+    "password": "password1",
+    "password_confirmation": "password1"
+  }
+}'
+
+Conversations:
+curl -X GET http://localhost:3000/api/v1/conversations/1
+curl -X DELETE http://localhost:3000/api/v1/conversations/1
+curl -X POST http://localhost:3000/api/v1/conversations \
+  -H "Content-Type: application/json" \
+  -d '{
+    "conversation": {
+      "name": "New Conversation",
+      "user_ids": [1, 2]
+    }
+  }'
+
+Messages:
+curl -X GET http://localhost:3000/api/v1/messages/1
+curl -X GET http://localhost:3000/api/v1/conversations/1/messages
+curl -X DELETE http://localhost:3000/api/v1/messages/1
+curl -X POST http://localhost:3000/api/v1/conversations/6/messages \
+  -H "Content-Type: application/json" \
+  -d '{
+        "message": {
+          "body": "Hello, this is a new message!",
+          "user_id": 1, 
+          "recipient_ids": [2, 3]
+        }
+      }'
 
 Debugging in Browser
   - branch => qa-environment-debugging-in-browser
