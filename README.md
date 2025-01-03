@@ -2,7 +2,8 @@
 ![My Image](public/hermes-logo.jpeg)
 
 
-I've always wanted to build a chat app as a side project. In this project I'll be utilizing Action Cable + SMS messaging. I'm excited to share my progress with you. 
+# Summary
+This project is a chat application built using Action Cable and SMS messaging. The goal is to create a real-time, interactive chat experience where users can communicate via both web and text messages. By leveraging Action Cable for seamless WebSocket connections and integrating SMS functionality, the app enables users to send and receive messages on the go. This side project will showcase my ability to combine modern web technologies with traditional communication methods, and I'll be documenting my progress here. Stay tuned for updates as I continue to develop and refine this project!
 
 # Frameworks
   - Ruby on Rails => for the backend
@@ -141,7 +142,7 @@ curl -X POST http://localhost:3000/api/v1/conversations/6/messages \
         }
       }'
 
-Debugging in Browser
+Debugging in Browser(WIP)
   - branch => qa-environment-debugging-in-browser
   - url => http://localhost:3000/conversations/1/debug/chat/1
 
